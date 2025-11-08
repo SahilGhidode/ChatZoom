@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ChatZoom | Home</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ✨ Keyframe Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.6s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.9s;
+    }
+
+    /* 🌈 Gradient overlay for sections */
+    .hero-gradient {
+      background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-800 font-sans">
+
+  <!-- 🔝 Navbar -->
+  <nav class="bg-gradient-to-r from-green-600 to-emerald-500 text-white px-6 py-4 flex justify-between items-center shadow-lg fade-in sticky top-0 z-50">
+    <a href="/index.html" class="text-3xl font-extrabold tracking-tight hover:scale-105 transition-transform">ChatZoom</a>
+    <ul class="flex space-x-6 text-sm font-medium">
+      <li><a href="#" class="hover:text-green-200 transition-colors">Home</a></li>
+      <li><a href="#features" class="hover:text-green-200 transition-colors">Features</a></li>
+      <li><a href="#about" class="hover:text-green-200 transition-colors">About</a></li>
+      <li><a href="#contact" class="hover:text-green-200 transition-colors">Contact</a></li>
+      <li><a href="/login.html" class="hover:text-green-200 transition-colors">Login</a></li>
+      <li><a href="/register.html" class="hover:text-green-200 transition-colors">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- 🦸 Hero Section -->
+  <section class="hero-gradient py-24 text-center px-4 fade-in-up shadow-inner">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-green-900 mb-6 drop-shadow-lg">Real-Time Chat Made Easy</h1>
+    <p class="text-lg md:text-xl text-green-800 mb-8 max-w-2xl mx-auto leading-relaxed delay-1 fade-in-up">
+      Create rooms, invite friends, and experience lightning-fast conversations in real-time.
+    </p>
+    <a href="/login.html"
+      class="bg-green-700 text-white px-8 py-3 rounded-full hover:bg-green-800 transition transform hover:scale-110 shadow-lg delay-2 fade-in-up inline-block font-semibold">
+      🚀 Get Started
+    </a>
+  </section>
+
+  <!-- 🚀 Features Section -->
+  <section id="features" class="py-20 px-8 text-center bg-gray-50 fade-in">
+    <h2 class="text-4xl font-extrabold mb-12 text-green-700">Why ChatZoom?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 text-left max-w-6xl mx-auto">
+      <div
+        class="p-8 border rounded-2xl shadow hover:shadow-2xl transform hover:-translate-y-3 transition-all bg-white fade-in-up delay-1">
+        <h3 class="text-xl font-bold mb-3 text-green-700">⚡ Fast & Secure</h3>
+        <p class="text-gray-600">Token-based login with end-to-end Socket communication for total privacy.</p>
+      </div>
+      <div
+        class="p-8 border rounded-2xl shadow hover:shadow-2xl transform hover:-translate-y-3 transition-all bg-white fade-in-up delay-2">
+        <h3 class="text-xl font-bold mb-3 text-green-700">💬 Real-Time Chat</h3>
+        <p class="text-gray-600">Send, receive & type instantly with seamless WebSocket connections.</p>
+      </div>
+      <div
+        class="p-8 border rounded-2xl shadow hover:shadow-2xl transform hover:-translate-y-3 transition-all bg-white fade-in-up delay-3">
+        <h3 class="text-xl font-bold mb-3 text-green-700">🏠 Room Support</h3>
+        <p class="text-gray-600">Create or join chat rooms effortlessly with one-click invites.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📘 About Section -->
+  <section id="about" class="py-20 px-8 bg-gradient-to-r from-green-50 to-emerald-100 text-center fade-in">
+    <h2 class="text-4xl font-extrabold mb-8 text-green-700">About ChatZoom</h2>
+    <p class="max-w-3xl mx-auto text-gray-700 fade-in-up delay-1 leading-relaxed">
+      ChatZoom is a modern, scalable chat platform built with the MERN stack — MongoDB, Express, React, and Node.js.
+      Integrated with Socket.IO for real-time communication, it’s crafted for learners and developers to connect instantly.
+    </p>
+  </section>
+
+  <!-- 🌟 Testimonials / FAQ Section -->
+  <section class="py-20 px-8 text-center bg-white fade-in">
+    <h2 class="text-4xl font-extrabold mb-10 text-green-700">What Users Say</h2>
+    <div class="max-w-4xl mx-auto grid gap-8 md:grid-cols-2 text-left">
+      <div class="border p-6 rounded-2xl shadow-md hover:shadow-xl bg-green-50 transition fade-in-up delay-1">
+        <p class="italic">"Super simple and fast. Love the real-time typing!"</p>
+        <p class="text-sm text-gray-500 mt-3">- Aman, Developer</p>
+      </div>
+      <div class="border p-6 rounded-2xl shadow-md hover:shadow-xl bg-green-50 transition fade-in-up delay-2">
+        <p class="italic">"Best app to teach students WebSocket-based chat."</p>
+        <p class="text-sm text-gray-500 mt-3">- Priya, Instructor</p>
+      </div>
+    </div>
+
+    <!-- 💡 Developer Focus Section -->
+    <section class="py-20 px-8 bg-gray-50 text-center mt-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6 text-green-700">Built with Developers in Mind</h2>
+      <p class="max-w-3xl mx-auto text-gray-700 fade-in-up delay-1 leading-relaxed">
+        ChatZoom is engineered with technologies like Socket.IO, JWT, MongoDB, and TailwindCSS for
+        fast, secure, and scalable communication. Built for real-world applications with simplicity and power in mind.
+      </p>
+    </section>
+
+    <!-- ❓ FAQ -->
+    <h3 class="text-3xl font-extrabold mt-12 mb-6 text-green-700 fade-in">FAQs</h3>
+    <div class="max-w-2xl mx-auto text-left space-y-6">
+      <div class="fade-in-up delay-1">
+        <strong class="text-green-700">Is ChatZoom free to use?</strong>
+        <p class="text-gray-600">Yes, it's completely free for all users.</p>
+      </div>
+      <div class="fade-in-up delay-2">
+        <strong class="text-green-700">Can I invite friends to private rooms?</strong>
+        <p class="text-gray-600">Yes, just select a user and send an invite in the chat panel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📩 Contact Us Section -->
+  <section id="contact" class="py-20 px-8 bg-gradient-to-r from-emerald-50 to-green-100 text-center fade-in">
+    <h2 class="text-4xl font-extrabold mb-8 text-green-700">Contact Us</h2>
+    <form class="max-w-xl mx-auto space-y-5 fade-in-up" id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 transition shadow-sm" />
+      <input type="email" name="email" placeholder="Your Email" required
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 transition shadow-sm" />
+      <textarea name="message" rows="4" placeholder="Your Message" required
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 transition shadow-sm"></textarea>
+      <button type="submit"
+        class="bg-green-700 text-white px-8 py-3 rounded-full hover:bg-green-800 transform hover:scale-110 transition shadow-lg font-semibold">
+        Send Message
+      </button>
+    </form>
+  </section>
+
+  <!-- ⚓ Footer -->
+  <footer class="bg-gradient-to-r from-green-600 to-emerald-500 text-white text-center p-5 fade-in shadow-inner">
+    <p class="text-sm">&copy; 2025 ChatZoom. All rights reserved.</p>
+  </footer>
+
+  <!-- ✨ Contact Form Script -->
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        Swal.fire("Sent!", "We’ve received your message.", "success");
+        e.target.reset();
+      } else {
+        Swal.fire("Oops!", "Something went wrong.", "error");
+      }
+    });
+  </script>
+</body>
+
+</html>

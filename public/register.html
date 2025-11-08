@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register | ChatZoom</title>
+
+  <!-- TailwindCSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- SweetAlert for alerts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- 🔝 Navbar with Logo -->
+  <nav class="bg-white shadow px-6 py-4">
+    <a href="/index.html" class="text-2xl font-bold text-green-600">ChatZoom</a>
+  </nav>
+
+  <!-- 🧾 Centered Register Form -->
+  <div class="flex-grow flex justify-center items-center">
+    <form id="registerForm" class="bg-white p-8 rounded shadow-md w-96 space-y-4">
+      <h2 class="text-2xl font-semibold text-center text-green-600">Register</h2>
+
+      <input required type="text" placeholder="Name" id="name" class="w-full p-2 border rounded" />
+
+      <div class="space-y-2">
+        <input required type="email" placeholder="Email" id="email" class="w-full p-2 border rounded" />
+        <button
+          type="button"
+          id="sendOtpBtn"
+          class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        >
+          Send OTP
+        </button>
+      </div>
+
+      <div id="otpSection" class="hidden space-y-2">
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          id="otp"
+          class="w-full p-2 border rounded"
+        />
+        <button
+          type="button"
+          id="verifyOtpBtn"
+          class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        >
+          Verify OTP
+        </button>
+      </div>
+
+      <input required type="password" placeholder="Password" id="password" class="w-full p-2 border rounded" />
+
+      <button
+        type="submit"
+        id="registerBtn"
+        class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        disabled
+      >
+        Register
+      </button>
+
+      <p class="text-sm text-center">
+        Already have an account?
+        <a href="/login.html" class="text-blue-600">Login</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- ✅ Registration + OTP Logic -->
+  <script>
+    const sendOtpBtn = document.getElementById("sendOtpBtn");
+    const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+    const otpSection = document.getElementById("otpSection");
+    const registerBtn = document.getElementById("registerBtn");
+    let verifiedEmail = null;
+
+    // 🔹 Step 1: Send OTP
+    sendOtpBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      if (!email) return Swal.fire("Error", "Please enter your email!", "error");
+
+      sendOtpBtn.disabled = true;
+      sendOtpBtn.textContent = "Sending...";
+
+      try {
+        const res = await fetch("/api/verify/send-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const text = await res.text();
+
+        if (res.ok) {
+          Swal.fire("Success", "OTP sent to your email!", "success");
+          otpSection.classList.remove("hidden");
+        } else {
+          Swal.fire("Error", text || "Failed to send OTP.", "error");
+        }
+      } catch (err) {
+        Swal.fire("Error", "Server error while sending OTP.", "error");
+      }
+
+      sendOtpBtn.disabled = false;
+      sendOtpBtn.textContent = "Send OTP";
+    });
+
+    // 🔹 Step 2: Verify OTP
+    verifyOtpBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const otp = document.getElementById("otp").value.trim();
+      if (!otp) return Swal.fire("Error", "Please enter the OTP!", "error");
+
+      verifyOtpBtn.disabled = true;
+      verifyOtpBtn.textContent = "Verifying...";
+
+      try {
+        const res = await fetch("/api/verify/verify-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        });
+
+        const text = await res.text();
+
+        if (res.ok) {
+          Swal.fire("Verified!", "Email verified successfully.", "success");
+          verifiedEmail = email;
+          registerBtn.disabled = false;
+          otpSection.classList.add("hidden");
+          sendOtpBtn.disabled = true;
+          sendOtpBtn.textContent = "Email Verified ✅";
+        } else {
+          Swal.fire("Invalid OTP", text || "Please try again.", "error");
+        }
+      } catch (err) {
+        Swal.fire("Error", "Server error while verifying OTP.", "error");
+      }
+
+      verifyOtpBtn.disabled = false;
+      verifyOtpBtn.textContent = "Verify OTP";
+    });
+
+    // 🔹 Step 3: Register after verification
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (verifiedEmail !== email) {
+        return Swal.fire("Error", "Please verify your email first!", "error");
+      }
+
+      try {
+        const res = await fetch("/api/user/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const responseText = await res.text();
+
+        if (res.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Registered successfully!',
+            text: 'You can now log in.',
+            confirmButtonText: 'Go to Login'
+          }).then(() => {
+            window.location.href = "/login.html";
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: responseText || 'Please try again.'
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Server Error',
+          text: 'Unable to connect. Try again later.'
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
