@@ -166,7 +166,7 @@ ChatZoomApp/
 ** Sahil Ghidode **
 Full Stack Trainer | MERN Stack Mentor
 
-Built with ❤️ to help students master real-time and fullstack apps.
+Built real-time and fullstack apps.
 
 ---
 
